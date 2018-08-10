@@ -1,0 +1,83 @@
+C:\Users\Administrator\Desktop\大运S171\S171\S171\bin\Debug\S171.exe.config
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\bin\Debug\S171.exe.config
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\bin\Debug\S171.exe
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\bin\Debug\S171.pdb
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\bin\Debug\canlibCLSNET.dll
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\bin\Debug\linlibCLSNET.dll
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\obj\Debug\S171.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\obj\Debug\S171.Form1.resources
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\obj\Debug\S171.Properties.Resources.resources
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\obj\Debug\S171.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\obj\Debug\S171.exe
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\obj\Debug\S171.pdb
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\bin\Debug\Microsoft.VisualBasic.PowerPacks.dll
+C:\Users\Administrator\Desktop\大运S171上位机\S171\S171\bin\Debug\zh-Hans\Microsoft.VisualBasic.PowerPacks.resources.dll
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\bin\Debug\S171.exe.config
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\obj\Debug\S171.exe
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\obj\Debug\S171.pdb
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\bin\Debug\S171.exe
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\bin\Debug\S171.pdb
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\bin\Debug\canlibCLSNET.dll
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\bin\Debug\linlibCLSNET.dll
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\bin\Debug\zh-Hans\Microsoft.VisualBasic.PowerPacks.resources.dll
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\obj\Debug\S171.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\obj\Debug\S171.Form1.resources
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\obj\Debug\S171.Properties.Resources.resources
+C:\Users\Administrator\Desktop\大运S171上位机资料\大运S171上位机\S171\S171\obj\Debug\S171.csproj.GenerateResource.Cache
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\bin\Debug\S171.exe.config
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\obj\Debug\S171.exe
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\obj\Debug\S171.pdb
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\bin\Debug\S171.exe
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\bin\Debug\S171.pdb
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\bin\Debug\canlibCLSNET.dll
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\bin\Debug\linlibCLSNET.dll
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\bin\Debug\zh-Hans\Microsoft.VisualBasic.PowerPacks.resources.dll
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\obj\Debug\ResolveAssemblyReference.cache
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\obj\Debug\S171.Form1.resources
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\obj\Debug\S171.Properties.Resources.resources
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\obj\Debug\GenerateResource.read.1.tlog
+C:\Documents and Settings\Administrator\桌面\新上位机\S171\S171\S171\obj\Debug\GenerateResource.write.1.tlog
+C:\Users\Administrator\Desktop\4444\S171\S171\bin\Debug\S171.exe.config
+C:\Users\Administrator\Desktop\4444\S171\S171\obj\Debug\S171.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\4444\S171\S171\obj\Debug\S171.Properties.Resources.resources
+C:\Users\Administrator\Desktop\4444\S171\S171\obj\Debug\S171.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\4444\S171\S171\bin\Debug\S171.exe
+C:\Users\Administrator\Desktop\4444\S171\S171\bin\Debug\S171.pdb
+C:\Users\Administrator\Desktop\4444\S171\S171\bin\Debug\canlibCLSNET.dll
+C:\Users\Administrator\Desktop\4444\S171\S171\bin\Debug\linlibCLSNET.dll
+C:\Users\Administrator\Desktop\4444\S171\S171\bin\Debug\Microsoft.VisualBasic.PowerPacks.dll
+C:\Users\Administrator\Desktop\4444\S171\S171\bin\Debug\Microsoft.VisualBasic.PowerPacks.xml
+C:\Users\Administrator\Desktop\4444\S171\S171\obj\Debug\S171.exe
+C:\Users\Administrator\Desktop\4444\S171\S171\obj\Debug\S171.pdb
+C:\Users\Administrator\Desktop\4444\S171\S171\obj\Debug\S171.vForm1.resources
+C:\Users\Administrator\Desktop\4445\S171\S171\bin\Debug\S171.exe.config
+C:\Users\Administrator\Desktop\4445\S171\S171\obj\Debug\S171.exe
+C:\Users\Administrator\Desktop\4445\S171\S171\obj\Debug\S171.pdb
+C:\Users\Administrator\Desktop\4445\S171\S171\bin\Debug\S171.exe
+C:\Users\Administrator\Desktop\4445\S171\S171\bin\Debug\S171.pdb
+C:\Users\Administrator\Desktop\4445\S171\S171\bin\Debug\canlibCLSNET.dll
+C:\Users\Administrator\Desktop\4445\S171\S171\bin\Debug\linlibCLSNET.dll
+C:\Users\Administrator\Desktop\4445\S171\S171\bin\Debug\Microsoft.VisualBasic.PowerPacks.dll
+C:\Users\Administrator\Desktop\4445\S171\S171\bin\Debug\Microsoft.VisualBasic.PowerPacks.xml
+C:\Users\Administrator\Desktop\4445\S171\S171\obj\Debug\S171.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\4445\S171\S171\obj\Debug\S171.vForm1.resources
+C:\Users\Administrator\Desktop\4445\S171\S171\obj\Debug\S171.Properties.Resources.resources
+C:\Users\Administrator\Desktop\4445\S171\S171\obj\Debug\S171.csproj.GenerateResource.Cache
+I:\4445\S171\S171\bin\Debug\S171.exe.config
+I:\4445\S171\S171\obj\Debug\S171.exe
+I:\4445\S171\S171\obj\Debug\S171.pdb
+I:\4445\S171\S171\bin\Debug\S171.exe
+I:\4445\S171\S171\bin\Debug\S171.pdb
+I:\4445\S171\S171\bin\Debug\canlibCLSNET.dll
+I:\4445\S171\S171\bin\Debug\linlibCLSNET.dll
+I:\4445\S171\S171\bin\Debug\Microsoft.VisualBasic.PowerPacks.xml
+I:\4445\S171\S171\obj\Debug\S171.csprojResolveAssemblyReference.cache
+I:\4445\S171\S171\obj\Debug\S171.vForm1.resources
+I:\4445\S171\S171\obj\Debug\S171.Properties.Resources.resources
+I:\4445\S171\S171\obj\Debug\S171.csproj.GenerateResource.Cache
+C:\Users\CE-005\Desktop\4445\S171\S171\bin\Debug\S171.exe.config
+C:\Users\CE-005\Desktop\4445\S171\S171\obj\Debug\S171.exe
+C:\Users\CE-005\Desktop\4445\S171\S171\obj\Debug\S171.pdb
+C:\Users\CE-005\Documents\Visual Studio 2015\Projects\S171\S171\bin\Debug\S171.exe.config
+C:\Users\CE-005\Documents\Visual Studio 2015\Projects\S171\S171\obj\Debug\S171.exe
+C:\Users\CE-005\Documents\Visual Studio 2015\Projects\S171\S171\obj\Debug\S171.pdb
