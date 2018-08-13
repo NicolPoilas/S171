@@ -3,7 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using canlibCLSNET;
 using System.Text.RegularExpressions;
-
+using System.Text;
+using System.Security.Cryptography;
 
 namespace S171
 {
@@ -292,308 +293,59 @@ namespace S171
         }
         #endregion
 
-        /************************** AES-128 **************************************/
-        #region AES-128
-        public const byte BPOLY = 0x1b;/* Lower 8 bits of (x^8+x^4+x^3+x+1),ie.(x^4+x^3+x+1). */
-        public const int BLOCK_SIZE = 16;/* Block size in number of bytes. */
-
-        public const int KEY_BITS = 128; /* Use AES128. */
-        public const int ROUNDS = 10;   /* Number of rounds. */
-        public const int KEY_LENGTH = 16;/* Key length in number of bytes. */
-
-
-        static byte[] u8_block1 = new byte[256]; /* Workspace 1. */
-        static byte[] u8_block2 = new byte[256]; /* Worksapce 2. */
-
-        static byte[] s_u8_sbox_buf = new byte[256];
-
-        /* AES Secret Key */
-        static byte[] s_u8_secret_key = {0x00, 0x11, 0x22, 0x33, 0x44, 0x55,
-                                         0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB,
-                                         0xCC, 0xDD, 0xEE, 0xFF};
-
-        static byte[] p_u8_pow_tbl; /* Final location of exponentiation lookup table. */
-        static byte[] p_u8_log_tbl;    /* Final location of logarithm lookup table. */
-        static byte[] p_u8_sbox;       /* Final location of s-box. */
-        static byte[] p_u8_sbox_inv;   /* Final location of inverse s-box. */
-        static byte[] p_u8_expand_key; /* Final location of expanded p_u8_key. */
-
-        static void Calc_Pow_Log(byte[] p_u8_pow_tbl, byte[] p_u8_log_tbl)
+        //AES加密
+        public static string AesEncrypt(string value, string key, string iv = "")
         {
-            byte u8_i = 0;
-            byte t = 1;
-            byte temp1 = 0;
-            byte temp2 = 0;
-
-            do
+            if (string.IsNullOrEmpty(value)) return string.Empty;
+            if (key == null) throw new Exception("未将对象引用设置到对象的实例。");
+            if (key.Length < 16) throw new Exception("指定的密钥长度不能少于16位。");
+            if (key.Length > 32) throw new Exception("指定的密钥长度不能多于32位。");
+            if (key.Length != 16 && key.Length != 24 && key.Length != 32) throw new Exception("指定的密钥长度不明确。");
+            if (!string.IsNullOrEmpty(iv))
             {
-                /* Use 0x03 as root for exponentiation and logarithms. */
-                p_u8_pow_tbl[u8_i] = t;
-                p_u8_log_tbl[t] = u8_i;
-                u8_i++;
+                if (iv.Length < 16) throw new Exception("指定的向量长度不能少于16位。");
+            }
 
-                /* Muliply t by 3 in GF(2^8). */
-                if ((t & 0x80) == 1)
-                {
-                    t = (byte)((t << 1) ^ BPOLY ^ t);
-                }
-                else
-                {
-                    t = (byte)((t << 0) ^ BPOLY ^ t);
-                }
-            } while (t != 1); /* Cyclic properties ensure that u8_i < 255. */
-
-            p_u8_pow_tbl[255] = p_u8_pow_tbl[0]; /* 255 = '-0', 254 = -1, etc. */
+            var _keyByte = Encoding.UTF8.GetBytes(key);
+            var _valueByte = Encoding.UTF8.GetBytes(value);
+            using (var aes = new RijndaelManaged())
+            {
+                aes.IV = !string.IsNullOrEmpty(iv) ? Encoding.UTF8.GetBytes(iv) : Encoding.UTF8.GetBytes(key.Substring(0, 16));
+                aes.Key = _keyByte;
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+                var cryptoTransform = aes.CreateEncryptor();
+                var resultArray = cryptoTransform.TransformFinalBlock(_valueByte, 0, _valueByte.Length);
+                return Convert.ToBase64String(resultArray, 0, resultArray.Length);
+            }
         }
 
-        static void Calc_SBox(byte[] p_u8_sbox)
+        //AES解密
+        public static string AesDecrypt(string value, string key, string iv = "")
         {
-            byte u8_i = 0;
-            byte u8_rot = 0;
-            byte u8_temp = 0;
-            byte u8_result = 0;
-
-            /* Fill all entries of p_u8_sbox[]. */
-            do
+            if (string.IsNullOrEmpty(value)) return string.Empty;
+            if (key == null) throw new Exception("未将对象引用设置到对象的实例。");
+            if (key.Length < 16) throw new Exception("指定的密钥长度不能少于16位。");
+            if (key.Length > 32) throw new Exception("指定的密钥长度不能多于32位。");
+            if (key.Length != 16 && key.Length != 24 && key.Length != 32) throw new Exception("指定的密钥长度不明确。");
+            if (!string.IsNullOrEmpty(iv))
             {
-                /* Inverse in GF(2^8). */
-                if (u8_i > 0)
-                {
-                    u8_temp = p_u8_pow_tbl[255 - p_u8_log_tbl[u8_i]];
-                }
-                else
-                {
-                    u8_temp = 0;
-                }
+                if (iv.Length < 16) throw new Exception("指定的向量长度不能少于16位。");
+            }
 
-                /* Affine transformation in GF(2). */
-                /* Start with adding u8_key_temp vector in GF(2). */
-                u8_result = (byte)(u8_temp ^ 0x63);
-
-                for (u8_rot = 0; u8_rot < 4; u8_rot++)
-                {
-                    /* Rotate left. */
-                    u8_temp = (byte)((u8_temp << 1) | (u8_temp >> 7));
-
-                    /* Add rotated UINT8 in GF(2). */
-                    u8_result ^= u8_temp;
-                }
-
-                /* Put u8_result in table. */
-                p_u8_sbox[u8_i] = u8_result;
-            } while (++u8_i != 0);
+            var _keyByte = Encoding.UTF8.GetBytes(key);
+            var _valueByte = Convert.FromBase64String(value);
+            using (var aes = new RijndaelManaged())
+            {
+                aes.IV = !string.IsNullOrEmpty(iv) ? Encoding.UTF8.GetBytes(iv) : Encoding.UTF8.GetBytes(key.Substring(0, 16));
+                aes.Key = _keyByte;
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+                var cryptoTransform = aes.CreateDecryptor();
+                var resultArray = cryptoTransform.TransformFinalBlock(_valueByte, 0, _valueByte.Length);
+                return Encoding.UTF8.GetString(resultArray);
+            }
         }
-
-        static void Calc_SBox_Inv(byte[] p_u8_sbox, byte[] p_u8_sbox_inv)
-        {
-            byte u8_i = 0;
-            byte u8_j = 0;
-
-            /* Iterate through all elements in p_u8_sbox_inv using  u8_i. */
-            do
-            {
-                /* Search through p_u8_sbox using j. */
-                do
-                {
-                    /* Check if current j is the inverse of current u8_i. */
-                    if (p_u8_sbox[u8_j] == u8_i)
-                    {
-                        /* If so, set sBoxInc and indicate search finished. */
-                        p_u8_sbox_inv[u8_i] = u8_j;
-                        u8_j = 255;
-                    }
-                } while (++u8_j != 0);
-            } while (++u8_i != 0);
-        }
-
-        static void Cycle_Left(byte[] p_u8_row)
-        {
-            /* Cycle 4 bytes in an array left once. */
-            byte u_8_temp = p_u8_row[0];
-
-            p_u8_row[0] = p_u8_row[1];
-            p_u8_row[1] = p_u8_row[2];
-            p_u8_row[2] = p_u8_row[3];
-            p_u8_row[3] = u_8_temp;
-        }
-
-        static void Inv_Mix_column(byte[] p_u8_column)
-        {
-            byte u8_r0 = 0;
-            byte u8_r1 = 0;
-            byte u8_r2 = 0;
-            byte u8_r3 = 0;
-
-            u8_r0 = (byte)(p_u8_column[1] ^ p_u8_column[2] ^ p_u8_column[3]);
-            u8_r1 = (byte)(p_u8_column[0] ^ p_u8_column[2] ^ p_u8_column[3]);
-            u8_r2 = (byte)(p_u8_column[0] ^ p_u8_column[1] ^ p_u8_column[3]);
-            u8_r3 = (byte)(p_u8_column[0] ^ p_u8_column[1] ^ p_u8_column[2]);
-
-            if ((p_u8_column[0] & 0x80) == 1)
-            {
-                p_u8_column[0] = (byte)((p_u8_column[0] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[0] = (byte)((p_u8_column[0] << 1) ^ BPOLY);
-            }
-            if ((p_u8_column[1] & 0x80) == 1)
-            {
-                p_u8_column[1] = (byte)((p_u8_column[1] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[1] = (byte)((p_u8_column[1] << 1) ^ BPOLY);
-            }
-            if ((p_u8_column[2] & 0x80) == 1)
-            {
-                p_u8_column[2] = (byte)((p_u8_column[2] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[2] = (byte)((p_u8_column[2] << 1) ^ BPOLY);
-            }
-            if ((p_u8_column[3] & 0x80) == 1)
-            {
-                p_u8_column[3] = (byte)((p_u8_column[3] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[3] = (byte)((p_u8_column[3] << 1) ^ BPOLY);
-            }
-
-            u8_r0 ^= (byte)(p_u8_column[0] ^ p_u8_column[1]);
-            u8_r1 ^= (byte)(p_u8_column[1] ^ p_u8_column[2]);
-            u8_r2 ^= (byte)(p_u8_column[2] ^ p_u8_column[3]);
-            u8_r3 ^= (byte)(p_u8_column[0] ^ p_u8_column[3]);
-
-            if ((p_u8_column[0] & 0x80) == 1)
-            {
-                p_u8_column[0] = (byte)((p_u8_column[0] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[0] = (byte)((p_u8_column[0] << 1) ^ BPOLY);
-            }
-            if ((p_u8_column[1] & 0x80) == 1)
-            {
-                p_u8_column[1] = (byte)((p_u8_column[1] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[1] = (byte)((p_u8_column[1] << 1) ^ BPOLY);
-            }
-            if ((p_u8_column[2] & 0x80) == 1)
-            {
-                p_u8_column[2] = (byte)((p_u8_column[2] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[2] = (byte)((p_u8_column[2] << 1) ^ BPOLY);
-            }
-            if ((p_u8_column[3] & 0x80) == 1)
-            {
-                p_u8_column[3] = (byte)((p_u8_column[3] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[3] = (byte)((p_u8_column[3] << 1) ^ BPOLY);
-            }
-
-            u8_r0 ^= (byte)(p_u8_column[0] ^ p_u8_column[2]);
-            u8_r1 ^= (byte)(p_u8_column[1] ^ p_u8_column[3]);
-            u8_r2 ^= (byte)(p_u8_column[0] ^ p_u8_column[2]);
-            u8_r3 ^= (byte)(p_u8_column[1] ^ p_u8_column[3]);
-
-            if ((p_u8_column[0] & 0x80) == 1)
-            {
-                p_u8_column[0] = (byte)((p_u8_column[0] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[0] = (byte)((p_u8_column[0] << 1) ^ BPOLY);
-            }
-            if ((p_u8_column[1] & 0x80) == 1)
-            {
-                p_u8_column[1] = (byte)((p_u8_column[1] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[1] = (byte)((p_u8_column[1] << 1) ^ BPOLY);
-            }
-            if ((p_u8_column[2] & 0x80) == 1)
-            {
-                p_u8_column[2] = (byte)((p_u8_column[2] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[2] = (byte)((p_u8_column[2] << 1) ^ BPOLY);
-            }
-            if ((p_u8_column[3] & 0x80) == 1)
-            {
-                p_u8_column[3] = (byte)((p_u8_column[3] << 1) ^ BPOLY);
-            }
-            else
-            {
-                p_u8_column[3] = (byte)((p_u8_column[3] << 1) ^ BPOLY);
-            }
-
-            p_u8_column[0] = (byte)(p_u8_column[1] ^ p_u8_column[2] ^ p_u8_column[3] ^ p_u8_column[0]);
-            u8_r0 ^= p_u8_column[0];
-            u8_r1 ^= p_u8_column[0];
-            u8_r2 ^= p_u8_column[0];
-            u8_r3 ^= p_u8_column[0];
-
-            p_u8_column[0] = u8_r0;
-            p_u8_column[1] = u8_r1;
-            p_u8_column[2] = u8_r2;
-            p_u8_column[3] = u8_r3;
-        }
-
-        static byte Multiply(byte u8_num, byte u8_factor)
-        {
-            byte mask = 1;
-            byte u8_result = 0;
-
-            while (mask != 0)
-            {
-                /* Check bit of u8_factor given by mask. */
-                if ((mask & u8_factor) == u8_factor)
-                {
-                    /* Add current multiple of u8_num in GF(2). */
-                    u8_result ^= u8_num;
-                }
-
-                /* Shift mask p_u8_to indicate next bit. */
-                mask <<= 1;
-
-                /* Double u8_num. */
-                if ((u8_num & 0x80) == 0x80)
-                {
-                    u8_num = (byte)((u8_num << 1) ^ BPOLY);
-                }
-                else
-                {
-                    u8_num = (byte)((u8_num << 1) ^ 0);
-                }
-            }
-
-            return u8_result;
-        }
-
-        static byte Dot_Product(byte[] p_u8_vectou8_r1, byte[] p_u8_vectou8_r2)
-        {
-            byte u8_result = 0;
-
-            u8_result ^= Multiply(*p_u8_vectou8_r1++, *p_u8_vectou8_r2++);
-            u8_result ^= Multiply(*p_u8_vectou8_r1++, *p_u8_vectou8_r2++);
-            u8_result ^= Multiply(*p_u8_vectou8_r1++, *p_u8_vectou8_r2++);
-            u8_result ^= Multiply(*p_u8_vectou8_r1, *p_u8_vectou8_r2);
-
-            return u8_result;
-        }
-
-        #endregion
 
         /************************** 点亮LED **************************************/
         public void test_302()
